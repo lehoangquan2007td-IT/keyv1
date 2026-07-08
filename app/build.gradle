@@ -1,0 +1,62 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.android.inject.keystroker'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.android.inject.keystroker"
+        minSdk 23
+        targetSdk 34
+        versionCode 2
+        versionName "2.0"
+
+        // NOTE: configure these for your own research server.
+        // SERVER_URL must be an https URL (wss is negotiated automatically by socket.io-client).
+        // AUTH_TOKEN is sent as "Authorization: Bearer <token>".
+        buildConfigField "String", "SERVER_URL", "\"https://your-server.example.com\""
+        buildConfigField "String", "AUTH_TOKEN", "\"replace-with-your-research-token\""
+        // Optional cert-pin SHA-256 (leave empty to disable pinning).
+        buildConfigField "String", "PIN_SHA256", "\"\""
+    }
+
+    buildTypes {
+        debug {
+            // Allow self-signed certs in debug builds ONLY for local research testing.
+            buildConfigField "boolean", "ALLOW_SELF_SIGNED_CERT", "true"
+        }
+        release {
+            minifyEnabled false
+            buildConfigField "boolean", "ALLOW_SELF_SIGNED_CERT", "false"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    // AGP 8+ no longer generates BuildConfig by default; enable it explicitly because
+    // KeyNetwork reads SERVER_URL / AUTH_TOKEN / PIN_SHA256 / ALLOW_SELF_SIGNED_CERT from it.
+    buildFeatures {
+        buildConfig true
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+
+    // Socket.IO client (backed by OkHttp — needed for cert pinning).
+    implementation 'io.socket:socket.io-client:2.1.0'
+
+    // OkHttp explicit version for CertificatePinner.
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+
+    // Encrypted SQLite storage (new net.zetetic.database.sqlcipher package).
+    implementation 'net.zetetic:sqlcipher-android:4.6.1'
+
+    // Encrypted key storage.
+    implementation 'androidx.security:security-crypto:1.1.0-alpha06'
+}

@@ -1,0 +1,26 @@
+# Gradle / build artifacts
+.gradle/
+build/
+app/build/
+app/.cxx/
+*.iml
+local.properties
+
+# Wrapper binary is committed separately; keep .properties but ignore jar if regenerated oddly
+# (do NOT ignore gradle-wrapper.jar — it must be committed)
+
+# IDE
+.idea/
+*.swp
+.DS_Store
+
+# Native libs / logs
+*.log
+captures/
+
+# Server node modules
+server/node_modules/
+
+# IDE/Zcode
+.zcode/
+

